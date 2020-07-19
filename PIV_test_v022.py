@@ -147,38 +147,6 @@ plt.close()
 # %%
 openpiv.tools.save(x, y, u2, v2, mask, 'tmp2.txt' )
 fig, ax = plt.subplots(figsize=(12,12))
-openpiv.tools.display_vector_field('tmp2.txt', ax=ax, scaling_factor=20000, scale=1, width=0.0025, on_img=True, image_name='tmp.png');
-
-# %% [raw]
-# U = pd.DataFrame(data = u2)
-# V = pd.DataFrame(data = v2)
-# Ux = U.sub(U.mean(axis=1),axis=0)
-# Vy = V.sub(V.mean(axis=1),axis=0)
-#
-# print(U.mean(axis=1))
-# print(V.mean(axis=1))
-#
-# fig=plt.figure(figsize=(6, 3), dpi= 80, facecolor='w', edgecolor='k')
-# plt.quiver(x,y,Ux,Vy,
-#            (Ux**2+Vy**2)**0.5,cmap = 'jet',
-#            angles='xy', scale_units='xy', scale=160,
-#            headlength = 3, headwidth = 2, headaxislength = 3, pivot = 'mid')
-# # plt.axis('equal')
-# plt.clim(0,0.06)
-# plt.colorbar(orientation='horizontal')
-# plt.streamplot(x,y,Ux,Vy,
-#                density=[2,1.5],
-#                color = 'black')
-# plt.xlim(0,0.025)
-# plt.ylim(0,0.0085)
-# pic = 'PIVFIG/Run20_Stream_%05d.png' %i
-# plt.savefig(pic, dpi=600, facecolor='w', edgecolor='w')
-# # plt.show()
-# plt.close()
-#
-#
-# File3 = 'PIVFILE/Run20_%05d.txt' %i
-# openpiv.tools.save(x, y, u2, v2, mask, File3)
-# # openpiv.tools.display_vector_field(File3,window_size=32, scaling_factor = 10)
+openpiv.tools.display_vector_field('tmp2.txt', ax=ax, scaling_factor=10000, scale=5, width=0.0025, on_img=True, image_name='tmp.png');
 
 # %%
