@@ -5,3 +5,6 @@
 .ipynb_checkpoints/PIV_test_v022-checkpoint.md
 .ipynb_checkpoints/PIV_test_v022-checkpoint.py
 .ipynb_checkpoints/PIV_test_v022-checkpoint.ipynb
+*.json
+PIVFIG/.DS_Store
+PIVFIG/.DS_Store
