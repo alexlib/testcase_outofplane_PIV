@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import pandas as pd
 import os
-import cv2s
-from scipy import ndimage
+# import cv2s
+# from scipy import ndimage
 
 
 
@@ -20,21 +20,21 @@ searchsize = 64
 overlap = 16  
 dt = 462.44*10**(-6)
 
-for i in range(200,300,100):
-    File1 = 'frame%05d.tif' %i
+for i in range(200,214,1):
+    File1 = 'Run20/frame%05d.tif' %i
     ii = i+1
-    File2 = 'frame%05d.tif' %(ii)
+    File2 = 'Run20/frame%05d.tif' %(ii)
     print('Frames ', i, ' and ', ii)
 
-    img_a  = cv2.imread( File1,0)
-    img_b  = cv2.imread( File2,0)
+    img_a  = openpiv.tools.imread( File1,0)
+    img_b  = openpiv.tools.imread( File2,0)
 
     frame_a = img_a[130:400,200:1200]
     frame_b = img_b[130:400,200:1200]
     
     #rotation angle in degree
-    frame_a = ndimage.rotate(frame_a, -1)
-    frame_b = ndimage.rotate(frame_b, -1)
+    # frame_a = ndimage.rotate(frame_a, -1)
+    # frame_b = ndimage.rotate(frame_b, -1)
 
     
     u0, v0, sig2noise = openpiv.process.extended_search_area_piv( frame_a.astype(np.int32),frame_b.astype(np.int32), 
@@ -57,11 +57,12 @@ for i in range(200,300,100):
     
     
     fig=plt.figure(figsize=(10, 5), dpi= 80, facecolor='w', edgecolor='k')
-    plt.quiver(x,y,u0,v0,
+    plt.quiver(x,y,u0,-v0,
                angles='xy', scale_units='xy', scale = 160,
                headlength = 3, headwidth = 2, headaxislength = 3, pivot = 'mid')
     plt.axis('equal')
     plt.clim(0,0.06)
+    plt.gca().invert_yaxis()
     # plt.colorbar(orientation='horizontal')
     pic = 'PIVFIG/Run20_1_%05d.png' %i
     plt.savefig(pic, dpi=600, facecolor='w', edgecolor='w')
@@ -74,11 +75,12 @@ for i in range(200,300,100):
     u2, v2 = openpiv.filters.replace_outliers( u1, v1, method='localmean', max_iter=100, kernel_size=1)
     
     fig=plt.figure(figsize=(10, 5), dpi= 80, facecolor='w', edgecolor='k')
-    plt.quiver(x,y,u2,v2,
+    plt.quiver(x,y,u2,-v2,
                angles='xy', scale_units='xy', scale = 160,
                headlength = 3, headwidth = 2, headaxislength = 3, pivot = 'mid')
     plt.axis('equal')
     plt.clim(0,0.06)
+    plt.gca().invert_yaxis()
     # plt.colorbar(orientation='horizontal')
     pic = 'PIVFIG/Run20_2_%05d.png' %i
     plt.savefig(pic, dpi=600, facecolor='w', edgecolor='w')
@@ -94,14 +96,16 @@ for i in range(200,300,100):
     print(V.mean(axis=1))
     
     fig=plt.figure(figsize=(6, 3), dpi= 80, facecolor='w', edgecolor='k')
-    plt.quiver(x,y,Ux,Vy,
+    plt.quiver(x,y,Ux,-Vy,
                (Ux**2+Vy**2)**0.5,cmap = 'jet',
                angles='xy', scale_units='xy', scale=160,
-               headlength = 3, headwidth = 2, headaxislength = 3, pivot = 'mid')
+               headlength = 3, headwidth = 2, headaxislength = 3, 
+               pivot = 'mid')
     # plt.axis('equal')
     plt.clim(0,0.06)
+    plt.gca().invert_yaxis()
     plt.colorbar(orientation='horizontal')
-    plt.streamplot(x,y,Ux,Vy,
+    plt.streamplot(x,y,Ux,-Vy,
                    density=[2,1.5],
                    color = 'black')
     plt.xlim(0,0.025)
